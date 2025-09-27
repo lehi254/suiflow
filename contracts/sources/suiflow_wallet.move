@@ -21,7 +21,8 @@ module contracts::suiflow_wallet {
 
     /// Creates a new, empty wallet for a newly registered user
     /// This function is called by the SuiFlow backend to initialize user wallets
-    public fun create_wallet(ctx: &mut sui::tx_context::TxContext) {
+    /// Returns the wallet object to enable composable transactions
+    public fun create_wallet(ctx: &mut sui::tx_context::TxContext): SuiFlowWallet {
         let wallet = SuiFlowWallet {
             id: sui::object::new(ctx),
             balance: sui::balance::zero(),
@@ -29,7 +30,7 @@ module contracts::suiflow_wallet {
             is_frozen: false,
         };
         
-        sui::transfer::transfer(wallet, sui::tx_context::sender(ctx));
+        wallet
     }
 
     /// Adds SUI funds to a user's wallet
