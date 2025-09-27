@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SuiFlow - How It Works</title>
+    <meta
+      name="description"
+      content="Learn how SuiFlow brings USSD Sui transactions to any phone, anywhere."
+    />
+
+    <!-- Tailwind CSS + Flowbite CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "oxford-blue": "#050D2A",
+              "electric-blue": "#00A3FF",
+              "cyber-teal": "#00F5D4",
+              "neon-cyan": "#0FF0FC",
+              "midnight-navy": "#0A1435",
+              "sui-blue": "#458CF7", // Added a Sui-like blue
+            },
+            backgroundImage: {
+              "gradient-tech":
+                "linear-gradient(45deg, #00A3FF 0%, #00F5D4 100%)",
+              "gradient-dark":
+                "linear-gradient(to bottom, #050D2A 0%, #0A1435 100%)",
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-oxford-blue text-gray-100 min-h-screen">
+    <!-- Navbar -->
+    <nav class="bg-midnight-navy border-b border-gray-800 sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <div class="flex items-center">
+            <span
+              class="text-2xl font-bold bg-gradient-to-r from-electric-blue to-cyber-teal bg-clip-text text-transparent"
+              >SUIFLOW</span
+            >
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-center space-x-4">
+              <a href="/faq.html" class="hover:text-cyber-teal px-3 py-2"
+                >FAQS</a
+              >
+              <a
+                href="/how-it-works.html"
+                class="hover:text-cyber-teal px-3 py-2 text-cyber-teal"
+                >How It Works</a
+              >
+              <a href="/contact.html" class="hover:text-cyber-teal px-3 py-2"
+                >Contact Us</a
+              >
+              <a href="/play.html" class="hover:text-cyber-teal px-3 py-2"
+                >Playground</a
+              >
+              <a
+                href="signup.html"
+                class="ml-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-full inline-flex items-center justify-center transition-opacity"
+              >
+                Sign Up
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-gradient-dark py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+          How SuiFlow Works
+        </h1>
+        <p class="text-xl text-gray-300">
+          Sending SUI is as simple as dialing a number.
+        </p>
+      </div>
+    </section>
+
+    <!-- How It Works Steps -->
+    <section class="py-20 bg-oxford-blue">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="space-y-16">
+          <!-- Step 1 -->
+          <div class="flex flex-col md:flex-row items-center md:space-x-8">
+            <div class="md:w-1/2 mb-8 md:mb-0">
+              <div class="w-24 h-24 bg-gradient-tech rounded-full flex items-center justify-center mx-auto md:mx-0 mb-6">
+                <i class="fas fa-mobile-screen-button text-4xl text-oxford-blue"></i>
+              </div>
+              <h2 class="text-3xl font-bold mb-4 text-center md:text-left">1. Dial the USSD Code</h2>
+              <p class="text-lg text-gray-300 text-center md:text-left">
+                Start by dialing <span class="font-mono text-cyber-teal font-bold">*384*2005#</span> on any mobile phone. This works even on basic feature phones (kabambes) with no internet connection. The USSD menu will guide you through creating your secure SuiFlow wallet and setting up your unique PIN for transactions.
+              </p>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+              <!-- Visual: Phone dialing USSD -->
+              <div
+                class="bg-black border-2 border-cyber-teal rounded-lg p-4 font-mono text-cyber-teal w-64 shadow-lg shadow-cyan-900/30"
+              >
+                <div class="flex items-center mb-3 pb-2 border-b border-gray-700">
+                  <div class="flex space-x-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                  </div>
+                  <div class="text-xs text-gray-500 ml-2">USSD Terminal</div>
+                </div>
+                <div class="text-xs">
+                  <p class="mb-1">$ <span class="font-bold">*384*2005#</span></p>
+                  <p class="mt-3 text-green-400">Connecting...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="flex flex-col md:flex-row-reverse items-center md:space-x-reverse md:space-x-8">
+            <div class="md:w-1/2 mb-8 md:mb-0">
+              <div class="w-24 h-24 bg-gradient-tech rounded-full flex items-center justify-center mx-auto md:mx-0 mb-6">
+                <i class="fas fa-paper-plane text-4xl text-oxford-blue"></i>
+              </div>
+              <h2 class="text-3xl font-bold mb-4 text-center md:text-left">2. Send SUI Instantly</h2>
+              <p class="text-lg text-gray-300 text-center md:text-left">
+                Once in the menu, select "Send SUI". You'll be prompted to enter the recipient's phone number and the amount you wish to send. Confirm the transaction with your secure PIN. Powered by the Sui Blockchain, your SUI is transferred with sub-second finality and incredibly low fees, reaching the recipient almost instantly.
+              </p>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+              <!-- Visual: Phone showing Send SUI menu -->
+              <div
+                class="bg-black border-2 border-electric-blue rounded-lg p-4 font-mono text-electric-blue w-64 shadow-lg shadow-blue-900/30"
+              >
+                <div class="flex items-center mb-3 pb-2 border-b border-gray-700">
+                  <div class="flex space-x-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                  </div>
+                  <div class="text-xs text-gray-500 ml-2">SuiFlow Menu</div>
+                </div>
+                <div class="text-xs">
+                  <p class="mb-1 text-neon-cyan">> MENU:</p>
+                  <p class="mb-1 ml-4">1. Send SUI</p>
+                  <p class="mb-1 ml-4">2. Check Balance</p>
+                  <p class="mb-1 ml-4">3. Cash Out</p>
+                  <p class="mt-3 text-green-400">Enter option: <span class="font-bold">1</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="flex flex-col md:flex-row items-center md:space-x-8">
+            <div class="md:w-1/2 mb-8 md:mb-0">
+              <div class="w-24 h-24 bg-gradient-tech rounded-full flex items-center justify-center mx-auto md:mx-0 mb-6">
+                <i class="fas fa-hand-holding-dollar text-4xl text-oxford-blue"></i>
+              </div>
+              <h2 class="text-3xl font-bold mb-4 text-center md:text-left">3. Cash Out to Local Currency</h2>
+              <p class="text-lg text-gray-300 text-center md:text-left">
+                The recipient receives an SMS notification and can then access their SUI through the same USSD code. From their SuiFlow wallet, they can choose to cash out their SUI directly to their local mobile money account or bank, depending on regional integrations. It's a seamless transition from crypto to fiat, empowering financial inclusion.
+              </p>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+              <!-- Visual: Phone showing Cash Out menu -->
+              <div
+                class="bg-black border-2 border-neon-cyan rounded-lg p-4 font-mono text-neon-cyan w-64 shadow-lg shadow-cyan-900/30"
+              >
+                <div class="flex items-center mb-3 pb-2 border-b border-gray-700">
+                  <div class="flex space-x-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+         

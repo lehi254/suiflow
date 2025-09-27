@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SuiFlow - FAQs</title>
+    <meta
+      name="description"
+      content="Frequently Asked Questions about SuiFlow - USSD Sui Wallet."
+    />
+
+    <!-- Tailwind CSS + Flowbite CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "oxford-blue": "#050D2A",
+              "electric-blue": "#00A3FF",
+              "cyber-teal": "#00F5D4",
+              "neon-cyan": "#0FF0FC",
+              "midnight-navy": "#0A1435",
+              "sui-blue": "#458CF7", // Added a Sui-like blue
+            },
+            backgroundImage: {
+              "gradient-tech":
+                "linear-gradient(45deg, #00A3FF 0%, #00F5D4 100%)",
+              "gradient-dark":
+                "linear-gradient(to bottom, #050D2A 0%, #0A1435 100%)",
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-oxford-blue text-gray-100 min-h-screen">
+    <!-- Navbar -->
+    <nav class="bg-midnight-navy border-b border-gray-800 sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <div class="flex items-center">
+            <span
+              class="text-2xl font-bold bg-gradient-to-r from-electric-blue to-cyber-teal bg-clip-text text-transparent"
+              >SUIFLOW</span
+            >
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-center space-x-4">
+              <a href="/faq.html" class="hover:text-cyber-teal px-3 py-2 text-cyber-teal"
+                >FAQS</a
+              >
+              <a
+                href="/how-it-works.html"
+                class="hover:text-cyber-teal px-3 py-2"
+                >How It Works</a
+              >
+              <a href="/contact.html" class="hover:text-cyber-teal px-3 py-2"
+                >Contact Us</a
+              >
+              <a href="/play.html" class="hover:text-cyber-teal px-3 py-2"
+                >Playground</a
+              >
+              <a
+                href="signup.html"
+                class="ml-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-full inline-flex items-center justify-center transition-opacity"
+              >
+                Sign Up
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-gradient-dark py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+          Frequently Asked Questions
+        </h1>
+        <p class="text-xl text-gray-300">
+          Find answers to common questions about SuiFlow.
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQs Content -->
+    <section class="py-20 bg-oxford-blue">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="accordion-flush" data-accordion="flush" data-active-classes="bg-midnight-navy text-cyber-teal">
+          
+          <!-- FAQ Item 1 -->
+          <h2 id="accordion-flush-heading-1">
+            <button
+              type="button"
+              class="flex items-center justify-between w-full py-5 font-medium text-left border-b border-gray-700 text-gray-200 hover:text-cyber-teal transition-colors"
+              data-accordion-target="#accordion-flush-body-1"
+              aria-expanded="false"
+              aria-controls="accordion-flush-body-1"
+            >
+              <span>What is SuiFlow?</span>
+              <svg
+                data-accordion-icon
+                class="w-3 h-3 rotate-180 shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5 5 1 1 5"
+                />
+              </svg>
+            </button>
+          </h2>
+          <div
+            id="accordion-flush-body-1"
+            class="hidden"
+            aria-labelledby="accordion-flush-heading-1"
+          >
+            <div class="py-5 border-b border-gray-700 text-gray-400">
+              <p class="mb-2">
+                SuiFlow is a groundbreaking platform that allows users to send and receive SUI cryptocurrency using only USSD codes on any mobile phone, regardless of internet connectivity or smartphone ownership. It aims to bank Africa's unbanked population by leveraging the power of the Sui Blockchain.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 2 -->
+          <h2 id="accordion-flush-heading-2">
+            <button
+              type="button"
+              class="flex items-center justify-between w-full py-5 font-medium text-left border-b border-gray-700 text-gray-200 hover:text-cyber-teal transition-colors"
+              data-accordion-target="#accordion-flush-body-2"
+              aria-expanded="false"
+              aria-controls="accordion-flush-body-2"
+            >
+              <span>How does SuiFlow work without internet?</span>
+              <svg
+                data-accordion-icon
+                class="w-3 h-3 rotate-180 shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5 5 1 1 5"
+                />
+              </svg>
+            </button>
+          </h2>
+          <div
+            id="accordion-flush-body-2"
+            class="hidden"
+            aria-labelledby="accordion-flush-heading-2"
+          >
+            <div class="py-5 border-b border-gray-700 text-gray-400">
+              <p class="mb-2">
+                SuiFlow utilizes Unstructured Supplementary Service Data (USSD) technology, which is a communication protocol used by GSM cellular telephones to communicate with the service provider's computers. This system does not require an internet connection, making it accessible even on basic feature phones (kabambes). When you dial our USSD code, your request is routed through your mobile network to our secure backend, which then interacts with the Sui Blockchain.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 3 -->
+          <h2 id="accordion-flush-heading-3">
+            <button
+              type="button"
+              class="flex items-center justify-between w-full py-5 font-medium text-left border-b border-gray-700 text-gray-200 hover:text-cyber-teal transition-colors"
+              data-accordion-target="#accordion-flush-body-3"
+              aria-expanded="false"
+              aria-controls="accordion-flush-body-3"
+            >
+              <span>What is a "kabambe" phone?</span>
+              <svg
+                data-accordion-icon
+                class="w-3 h-3 rotate-180 shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5 5 1 1 5"
+                />
+              </svg>
+            </button>
+          </h2>
+          <div
+            id="accordion-flush-body-3"
+            class="hidden"
+            aria-labelledby="accordion-flush-heading-3"
+          >
+            <div class="py-5 border-b border-gray-700 text-gray-400">
+              <p class="mb-2">
+                "Kabambe" is a colloquial term often used in East Africa to refer to a basic feature phone or an older model mobile phone, typically one that is not a smartphone and often lacks internet connectivity or advanced features. SuiFlow is designed to work seamlessly on these types of phones.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 4 -->
+          <h2 id="accordion-flush-heading-4">
+            <button
+              type="button"
+              class="flex items-center justify-between w-full py-5 font-medium text-left border-b border-gray-700 text-gray-200 hover:text-cyber-teal transition-colors"
+              data-accordion-target="#accordion-flush-body-4"
+              aria-expanded="false"
+              aria-controls="accordion-flush-body-4"
+            >
+              <span>Is my money safe with SuiFlow?</span>
+              <svg
+                data-accordion-icon
+                class="w-3 h-3 rotate-180 shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5 5 1 1 5"
+                />
+              </svg>
+            </button>
+          </h2>
+          <div
+            id="accordion-flush-body-4"
+            class="hidden"
+            aria-labelledby="accordion-flush-heading-4"
+          >
+            <div class="py-5 border-b border-gray-700 text-gray-400">
+              <p class="mb-2">
+                Yes, security is a top priority. SuiFlow leverages the inherent security of the Sui Blockchain for transactions. Additionally, we employ AI-driven fraud protection to detect and prevent suspicious activities in real-time. Your transactions are secured with a PIN, and your assets are protected by the robust architecture of the Sui network.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 5 -->
+          <h2 id="accordion-flush-heading-5">
+            <button
+              type="button"
+              class="flex items-center justify-between w-full py-5 font-medium text-left border-b border-gray-700 text-gray-200 hover:text-cyber-teal transition-colors"
+              data-accordion-target="#accordion-flush-body-5"
+              aria-expanded="false"
+              aria-controls="accordion-flush-body-5"
+            >
+              <span>What are the transaction fees?</span>
+              <svg
+                data-accordion-icon
+                class="w-3 h-3 rotate-180 shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5 5 1 1 5"
+                />
+              </svg>
+            </button>
+          </h2>
+          <div
+            id="accordion-flush-body-5"
+            class="hidden"
+            aria-labelledby="accordion-flush-heading-5"
+          >
+            <div class="py-5 border-b border-gray-700 text-gray-400">
+              <p class="mb-2">
+                Transactions on SuiFlow benefit from Sui's ultra-low and predictable gas fees, averaging around ~$0.002 per transaction. This makes sending and receiving SUI extremely cost-effective, especially for micropayments and remittances.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 6 -->
+          <h2 id="accordion-flush-heading-6">
+            <button
+              type="button"
+              class="flex items-center justify-between w-full py-5 font-medium text-left border-b border-gray-700 text-gray-200 hover:text-cyber-teal transition-colors"
+              data-accordion-target="#accordion-flush-body-6"
+              aria-expanded="false"
+              aria-controls="accordion-flush-body-6"
+            >
+              <span>How do I cash out my SUI?</span>
+              <svg
+                data-accordion-icon
+                class="w-3 h-3 rotate-180 shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5 5 1 1 5"
+                />
+              </svg>
+            </button>
+          </h2>
+          <div
+            id="accordion-flush-body-6"
+            class="hidden"
+            aria-labelledby="accordion-flush-heading-6"
+          >
+            <div class="py-5 border-b border-gray-700 text-gray-400">
+              <p class="mb-2">
+                Recipients can instantly withdraw funds to their local bank accounts or mobile money services, depending on the available integrations in their region. More details on specific cash-out options will be available upon launch and in your USSD menu.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-tech">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-oxford-blue mb-6">
+          Still Have Questions?
+        </h2>
+        <p class="text-oxford-blue text-xl mb-8 max-w-3xl mx-auto">
+          Our support team is ready to assist you.
+        </p>
+        <a
+          href="/contact.html"
+          class="bg-oxford-blue hover:bg-midnight-navy text-electric-blue font-bold py-3 px-8 rounded-full text-lg transition-colors"
+        >
+          Contact Support
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-midnight-navy py-12 border-t border-gray-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div>
+            <h3
+              class="text-lg font-bold mb-4 bg-gradient-to-r from-electric-blue to-cyber-teal bg-clip-text text-transparent"
+            >
+              SUIFLOW
+            </h3>
+            <p class="text-gray-400">
+              Banking Africa's unbanked via USSD and Sui.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-4 text-gray-300">Product</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="/index.html#features" class="text-gray-400 hover:text-cyber-teal"
+                  >Features</a
+                >
+              </li>
+               <li>
+                <a href="/index.html#how-it-works" class="text-gray-400 hover:text-cyber-teal"
+                  >How it Works</a
+                >
+              </li>
+              <li>
+                <a href="/faq.html" class="text-gray-400 hover:text-cyber-teal">FAQ</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-4 text-gray-300">Company</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="text-gray-400 hover:text-cyber-teal"
+                  >About</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-cyber-teal">Blog</a>
+              </li>
+              <li>
+                <a href="/contact.html" class="text-gray-400 hover:text-cyber-teal"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-4 text-gray-300">Legal</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="text-gray-400 hover:text-cyber-teal"
+                  >Privacy</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-cyber-teal"
+                  >Terms</a
+                >
+              </li>
+              <li>
+                <a href="/LICENSE" class="text-gray-400 hover:text-cyber-teal"
+                  >Licenses</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="text-gray-500 text-sm">
+            © 2025 SuiFlow. All rights reserved.
+          </p>
+          <div class="flex space-x-6 mt-4 md:mt-0">
+            <a href="#" class="text-gray-400 hover:text-cyber-teal">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-cyber-teal">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-cyber-teal">
+                <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Flowbite JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+  </body>
+</html>
+
+--- END OF FILE faqs.html ---
+
+--- START OF FILE how-it-works.html ---
+
+code
+Html
+play_circle
+download
+content_copy
+expand_less
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SuiFlow - How It Works</title>
+    <meta
+      name="description"
+      content="Learn how SuiFlow brings USSD Sui transactions to any phone, anywhere."
+    />
+
+    <!-- Tailwind CSS + Flowbite CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "oxford-blue": "#050D2A",
+              "electric-blue": "#00A3FF",
+              "cyber-teal": "#00F5D4",
+              "neon-cyan": "#0FF0FC",
+              "midnight-navy": "#0A1435",
+              "sui-blue": "#458CF7", // Added a Sui-like blue
+            },
+            backgroundImage: {
+              "gradient-tech":
+                "linear-gradient(45deg, #00A3FF 0%, #00F5D4 100%)",
+              "gradient-dark":
+                "linear-gradient(to bottom, #050D2A 0%, #0A1435 100%)",
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis

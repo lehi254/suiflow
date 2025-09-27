@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SuiFlow - Playground</title>
+    <meta
+      name="description"
+      content="Experiment with SuiFlow's USSD interface in a safe, simulated environment."
+    />
+
+    <!-- Tailwind CSS + Flowbite CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "oxford-blue": "#050D2A",
+              "electric-blue": "#00A3FF",
+              "cyber-teal": "#00F5D4",
+              "neon-cyan": "#0FF0FC",
+              "midnight-navy": "#0A1435",
+              "sui-blue": "#458CF7", // Added a Sui-like blue
+            },
+            backgroundImage: {
+              "gradient-tech":
+                "linear-gradient(45deg, #00A3FF 0%, #00F5D4 100%)",
+              "gradient-dark":
+                "linear-gradient(to bottom, #050D2A 0%, #0A1435 100%)",
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .terminal-output {
+        height: 300px;
+        overflow-y: auto;
+        border-bottom: 1px solid #00f5d4;
+      }
+      .terminal-input-container {
+        border-top: 1px solid #00f5d4;
+      }
+      .input-caret {
+        animation: blink-caret 0.75s step-end infinite;
+      }
+      @keyframes blink-caret {
+        from, to { border-color: transparent }
+        50% { border-color: #00f5d4; }
+      }
+    </style>
+  </head>
+  <body class="bg-oxford-blue text-gray-100 min-h-screen">
+    <!-- Navbar -->
+    <nav class="bg-midnight-navy border-b border-gray-800 sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <div class="flex items-center">
+            <span
+              class="text-2xl font-bold bg-gradient-to-r from-electric-blue to-cyber-teal bg-clip-text text-transparent"
+              >SUIFLOW</span
+            >
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-center space-x-4">
+              <a href="/faq.html" class="hover:text-cyber-teal px-3 py-2"
+                >FAQS</a
+              >
+              <a
+                href="/how-it-works.html"
+                class="hover:text-cyber-teal px-3 py-2"
+                >How It Works</a
+              >
+              <a href="/contact.html" class="hover:text-cyber-teal px-3 py-2"
+                >Contact Us</a
+              >
+              <a href="/play.html" class="hover:text-cyber-teal px-3 py-2 text-cyber-teal"
+                >Playground</a
+              >
+              <a
+                href="signup.html"
+                class="ml-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-full inline-flex items-center justify-center transition-opacity"
+              >
+                Sign Up
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-gradient-dark py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+          SuiFlow Playground
+        </h1>
+        <p class="text-xl text-gray-300">
+          Simulate USSD transactions in a safe, interactive environment.
+        </p>
+      </div>
+    </section>
+
+    <!-- Playground Section -->
+    <section class="py-20 bg-oxford-blue">
+      <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-black border-2 border-cyber-teal rounded-lg shadow-lg shadow-cyan-900/30">
+          <div class="flex items-center p-3 border-b border-gray-700">
+            <div class="flex space-x-2">
+              <div class="w-3 h-3 rounded-full bg-red-500"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            <div class="text-xs text-gray-500 ml-3">USSD Simulator</div>
+          </div>
+          <div class="p-4 font-mono text-cyber-teal terminal-output" id="terminal-output">
+            <p>Welcome to SuiFlow USSD Simulator!</p>
+            <p>Dial *384*2005# to start.</p>
+            <p class="mt-2 text-yellow-400">NOTE: This is a simulation, no real transactions occur.</p>
+          </div>
+          <div class="p-4 terminal-input-container">
+            <div class="flex items-center">
+              <span class="text-cyber-teal">$</span>
+              <input
+                type="text"
+                id="terminal-input"
+                class="flex-grow bg-transparent border-none outline-none text-cyber-teal ml-2"
+                autofocus
+                spellcheck="false"
+                autocomplete="off"
+                placeholder="Enter USSD code or menu option..."
+              />
+              <span class="input-caret text-cyber-teal">|</span>
+            </div>
+          </div>
+        </div>
+        <p class="text-center text-gray-400 text-sm mt-6">
+          Hint: Try typing <span class="font-mono text-electric-blue">*384*2005#</span> and press Enter to begin.
+        </p>
+      </div>
+    </section>
+
+    <!-- How it works brief -->
+    <section class="py-16 bg-midnight-navy">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold mb-4">How the Simulation Works</h2>
+        <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+          This playground simulates the USSD menu interactions. Type the codes or menu options into the input field and press Enter. The simulator will respond just like a real USSD session.
+        </p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-midnight-navy py-12 border-t border-gray-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div>
+            <h3
+              class="text-lg font-bold mb-4 bg-gradient-to-r from-electric-blue to-cyber-teal bg-clip-text text-transparent"
+            >
+              SUIFLOW
+            </h3>
+            <p class="text-gray-400">
+              Banking Africa's unbanked via USSD and Sui.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-4 text-gray-300">Product</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="/index.html#features" class="text-gray-400 hover:text-cyber-teal"
+                  >Features</a
+                >
+              </li>
+               <li>
+                <a href="/index.html#how-it-works" class="text-gray-400 hover:text-cyber-teal"
+                  >How it Works</a
+                >
+              </li>
+              <li>
+                <a href="/faq.html" class="text-gray-400 hover:text-cyber-teal">FAQ</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-4 text-gray-300">Company</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="text-gray-400 hover:text-cyber-teal"
+                  >About</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-cyber-teal">Blog</a>
+              </li>
+              <li>
+                <a href="/contact.html" class="text-gray-400 hover:text-cyber-teal"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-4 text-gray-300">Legal</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="text-gray-400 hover:text-cyber-teal"
+                  >Privacy</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-cyber-teal"
+                  >Terms</a
+                >
+              </li>
+              <li>
+                <a href="/LICENSE" class="text-gray-400 hover:text-cyber-teal"
+                  >Licenses</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="text-gray-500 text-sm">
+            © 2025 SuiFlow. All rights reserved.
+          </p>
+          <div class="flex space-x-6 mt-4 md:mt-0">
+            <a href="#" class="text-gray-400 hover:text-cyber-teal">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-cyber-teal">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-cyber-teal">
+                <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Flowbite JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const terminalOutput = document.getElementById('terminal-output');
+        const terminalInput = document.getElementById('terminal-input');
+        let currentState = 'initial'; // States: initial, main_menu, send_sui_recipient, send_sui_amount, check_balance, cash_out_menu
+
+        function addOutput(text, colorClass = 'text-cyber-teal') {
+          const p = document.createElement('p');
+          p.className = colorClass;
+          p.textContent = text;
+          terminalOutput.appendChild(p);
+          terminalOutput.scrollTop = terminalOutput.scrollHeight; // Auto-scroll
+        }
+
+        function handleInput(input) {
+          addOutput(`$ ${input}`); // Echo user input
+
+          switch (currentState) {
+            case 'initial':
+              if (input === '*384*2005#') {
+                addOutput('Connecting to SuiFlow...');
+                setTimeout(() => {
+                  addOutput('MENU:', 'text-neon-cyan');
+                  addOutput('1. Send SUI');
+                  addOutput('2. Check Balance');
+                  addOutput('3. Cash Out');
+                  addOutput('4. Register/Update PIN');
+                  addOutput('Enter option:');
+                  currentState = 'main_menu';
+                }, 1000);
+              } else {
+                addOutput('Invalid USSD code. Please try *384*2005#');
+              }
+              break;
+
+            case 'main_menu':
+              switch (input) {
+                case '1':
+                  addOutput('SEND SUI:');
+                  addOutput('Enter recipient phone number (e.g., 254712345678):');
+                  currentState = 'send_sui_recipient';
+                  break;
+                case '2':
+                  addOutput('CHECK BALANCE:');
+                  addOutput('Your current SUI balance is: 15.00 SUI');
+                  addOutput('MENU:', 'text-neon-cyan');
+                  addOutput('1. Send SUI');
+                  addOutput('2. Check Balance');
+                  addOutput('3. Cash Out');
+                  addOutput('4. Register/Update PIN');
+                  addOutput('Enter option:');
+                  currentState = 'main_menu';
+                  break;
+                case '3':
+                  addOutput('CASH OUT:');
+                  addOutput('1. To Mobile Money');
+                  addOutput('2. To Bank Account');
+                  addOutput('Enter option:');
+                  currentState = 'cash_out_menu';
+                  break;
+                case '4':
+                    addOutput('REGISTER/UPDATE PIN:');
+                    addOutput('Enter new 4-digit PIN:');
+                    currentState = 'register_pin';
+                    break;
+                default:
+                  addOutput('Invalid option. Please enter 1, 2, 3 or 4.');
+              }
+              break;
+            
+            case 'register_pin':
+                if (input.match(/^\d{4}$/)) {
+                    addOutput('Confirm new 4-digit PIN:');
+                    currentState = 'confirm_pin';
+                } else {
+                    addOutput('Invalid PIN. Please enter a 4-digit number.');
+                }
+                break;
+
+            case 'confirm_pin':
+                if (input.match(/^\d{4}$/)) {
+                    addOutput('PIN successfully updated!', 'text-green-400');
+                    addOutput('MENU:', 'text-neon-cyan');
+                    addOutput('1. Send SUI');
+                    addOutput('2. Check Balance');
+                    addOutput('3. Cash Out');
+                    addOutput('4. Register/Update PIN');
+                    addOutput('Enter option:');
+                    currentState = 'main_menu';
+                } else {
+                    addOutput('PINs do not match or invalid format. Try again.');
+                    addOutput('Enter new 4-digit PIN:');
+                    currentState = 'register_pin';
+                }
+                break;
+
+
+            case 'send_sui_recipient':
+              if (input.match(/^\d{10,15}$/)) { // Basic phone number validation
+                addOutput(`Recipient: ${input}`);
+                addOutput('Enter amount in SUI:');
+                currentState = 'send_sui_amount';
+              } else {
+                addOutput('Invalid phone number. Please enter a valid number.');
+              }
+              break;
+
+            case 'send_sui_amount':
+              if (!isNaN(parseFloat(input)) && parseFloat(input) > 0) {
+                const amount = parseFloat(input);
+                addOutput(`Amount: ${amount} SUI`);
+                addOutput('Enter your PIN to confirm:');
+                currentState = 'send_sui_confirm_pin';
+              } else {
+                addOutput('Invalid amount. Please enter a positive number.');
+              }
+              break;
+
+            case 'send_sui_confirm_pin':
+              if (input.match(/^\d{4}$/)) { // Assuming a 4-digit PIN
+                addOutput('Processing transaction...', 'text-yellow-400');
+                setTimeout(() => {
+                  addOutput('Transaction successful! SUI sent.', 'text-green-400');
+                  addOutput('TX ID: 0x1a2b3c4d5e6f7g8h9i0j', 'text-gray-500');
+                  addOutput('MENU:', 'text-neon-cyan');
+                  addOutput('1. Send SUI');
+                  addOutput('2. Check Balance');
+                  addOutput('3. Cash Out');
+                  addOutput('4. Register/Update PIN');
+                  addOutput('Enter option:');
+                  currentState = 'main_menu';
+                }, 2000);
+              } else {
+                addOutput('Invalid PIN. Please enter your 4-digit PIN.');
+              }
+              break;
+
+            case 'cash_out_menu':
+                switch(input) {
+                    case '1':
+                        addOutput('CASH OUT TO MOBILE MONEY:');
+                        addOutput('Enter amount to cash out in SUI:');
+                        currentState = 'cash_out_mm_amount';
+                        break;
+                    case '2':
+                        addOutput('CASH OUT TO BANK ACCOUNT:');
+                        addOutput('This feature is coming soon!', 'text-yellow-400');
+                        addOutput('MENU:', 'text-neon-cyan');
+                        addOutput('1. Send SUI');
+                        addOutput('2. Check Balance');
+                        addOutput('3. Cash Out');
+                        addOutput('4. Register/Update PIN');
+                        addOutput('Enter option:');
+                        currentState = 'main_menu';
+                        break;
+                    default:
+                        addOutput('Invalid option. Please enter 1 or 2.');
+                }
+                break;
+
+            case 'cash_out_mm_amount':
+                if (!isNaN(parseFloat(input)) && parseFloat(input) > 0) {
+                    const amount = parseFloat(input);
+                    addOutput(`Cashing out ${amount} SUI to Mobile Money.`);
+                    addOutput('Enter your PIN to confirm:');
+                    currentState = 'cash_out_mm_confirm_pin';
+                } else {
+                    addOutput('Invalid amount. Please enter a positive number.');
+                }
+                break;
+            
+            case 'cash_out_mm_confirm_pin':
+                if (input.match(/^\d{4}$/)) { // Assuming a 4-digit PIN
+                    addOutput('Processing cash out...', 'text-yellow-400');
+                    setTimeout(() => {
+                        addOutput('Cash out successful! Funds sent to your Mobile Money.', 'text-green-400');
+                        addOutput('MENU:', 'text-neon-cyan');
+                        addOutput('1. Send SUI');
+                        addOutput('2. Check Balance');
+                        addOutput('3. Cash Out');
+                        addOutput('4. Register/Update PIN');
+                        addOutput('Enter option:');
+                        currentState = 'main_menu';
+                    }, 2000);
+                } else {
+                    addOutput('Invalid PIN. Please enter your 4-digit PIN.');
+                }
+                break;
+
+            default:
+              addOutput('An unexpected error occurred. Please dial *384*2005# to restart.', 'text-red-400');
+              currentState = 'initial';
+              break;
+          }
+        }
+
+        terminalInput.addEventListener('keydown', function(event) {
+          if (event.key === 'Enter') {
+            const input = terminalInput.value.trim();
+            if (input) {
+              handleInput(input);
+              terminalInput.value = '';
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

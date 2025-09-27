@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SuiFlow - Sign Up</title>
+    <meta
+      name="description"
+      content="Create your SuiFlow account and start sending SUI via USSD. No smartphone needed!"
+    />
+
+    <!-- Tailwind CSS + Flowbite CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "oxford-blue": "#050D2A",
+              "electric-blue": "#00A3FF",
+              "cyber-teal": "#00F5D4",
+              "neon-cyan": "#0FF0FC",
+              "midnight-navy": "#0A1435",
+              "sui-blue": "#458CF7", // Added a Sui-like blue
+            },
+            backgroundImage: {
+              "gradient-tech":
+                "linear-gradient(45deg, #00A3FF 0%, #00F5D4 100%)",
+              "gradient-dark":
+                "linear-gradient(to bottom, #050D2A 0%, #0A1435 100%)",
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-oxford-blue text-gray-100 min-h-screen">
+    <!-- Navbar -->
+    <nav class="bg-midnight-navy border-b border-gray-800 sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <div class="flex items-center">
+            <span
+              class="text-2xl font-bold bg-gradient-to-r from-electric-blue to-cyber-teal bg-clip-text text-transparent"
+              >SUIFLOW</span
+            >
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-center space-x-4">
+              <a href="/faq.html" class="hover:text-cyber-teal px-3 py-2"
+                >FAQS</a
+              >
+              <a
+                href="/how-it-works.html"
+                class="hover:text-cyber-teal px-3 py-2"
+                >How It Works</a
+              >
+              <a href="/contact.html" class="hover:text-cyber-teal px-3 py-2"
+                >Contact Us</a
+              >
+              <a href="/play.html" class="hover:text-cyber-teal px-3 py-2"
+                >Playground</a
+              >
+              <a
+                href="signup.html"
+                class="ml-4 bg-gradient-tech text-oxford-blue font-bold py-2 px-6 rounded-full inline-flex items-center justify-center transition-opacity opacity-90"
+              >
+                Sign Up
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-gradient-dark py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+          Join SuiFlow
+        </h1>
+        <p class="text-xl text-gray-300">
+          Create your account in minutes. No internet needed to transact!
+        </p>
+      </div>
+    </section>
+
+    <!-- Sign Up Form Section -->
+    <section class="py-20 bg-oxford-blue">
+      <div class="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-midnight-navy p-8 rounded-xl shadow-lg shadow-cyan-900/20">
+          <h2 class="text-2xl font-bold text-center mb-8">Register Your Account</h2>
+          
+          <form class="space-y-6">
+            <div>
+              <label for="full-name" class="block text-sm font-medium text-gray-300 mb-2"
+                >Full Name</label
+              >
+              <input
+                type="text"
+                id="full-name"
+                class="bg-oxford-blue border border-gray-700 text-gray-200 text-sm rounded-lg focus:ring-electric-blue focus:border-electric-blue block w-full p-2.5"
+                placeholder="Jane Doe"
+                required
+              />
+            </div>
+            <div>
+              <label for="phone-number" class="block text-sm font-medium text-gray-300 mb-2"
+                >Phone Number</label
+              >
+              <input
+                type="tel"
+                id="phone-number"
+                class="bg-oxford-blue border border-gray-700 text-gray-200 text-sm rounded-lg focus:ring-electric-blue focus:border-electric-blue block w-full p-2.5"
+                placeholder="e.g., +254712345678"
+                required
+              />
+              <p class="mt-2 text-sm text-gray-500">
+                This will be your primary account identifier.
+              </p>
+            </div>
+            <div>
+              <label for="pin" class="block text-sm font-medium text-gray-300 mb-2"
+                >Set Your 4-Digit PIN</label
+              >
+              <input
+                type="password"
+                id="pin"
+                maxlength="4"
+                class="bg-oxford-blue border border-gray-700 text-gray-200 text-sm rounded-lg focus:ring-electric-blue focus:border-electric-blue block w-full p-2.5"
+                placeholder="****"
+                required
+              />
+              <p class="mt-2 text-sm text-gray-500">
+                You will use this PIN for all USSD transactions.
+              </p>
+            </div>
+            <div>
+              <label for="confirm-pin" class="block text-sm font-medium text-gray-300 mb-2"
+                >Confirm PIN</label
+              >
+              <input
+                type="password"
+                id="confirm-pin"
+                maxlength="4"
+                class="bg-oxford-blue border border-gray-700 text-gray-200 text-sm rounded-lg focus:ring-electric-blue focus:border-electric-blue block w-full p-2.5"
+                placeholder="****"
+                required
+              />
+            </div>
+            <div class="flex items-start">
+              <div class="flex items-center h-5">
+                <input
+                  id="terms"
+                  type="checkbox"
+                  value=""
+                  class="w-4 h-4 border border-gray-700 rounded bg-oxford-blue focus:ring-3 focus:ring-electric-blue"
+                  required
+                />
+              </div>
+              <label for="terms" class="ml-2 text-sm font-medium text-gray-300">
+                I agree to the
+                <a href="#" class="text-electric-blue hover:underline">Terms and Conditions</a>
+              </label>
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-3 px-6 rounded-full text-lg inline-flex items-center justify-center transition-opacity"
+            >
+              Create Account
+            </button>
+            <p class="text-sm text-center text-gray-400 mt-4">
+              Already have an account?
+              <a href="/login.html" class="text-electric-blue hover:underline">Log In</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-midnight-navy py-12 border-t border-gray-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div>
+            <h3
+              class="text-lg font-bold mb-4 bg-gradient-to-r from-electric-blue to-cyber-teal bg-clip-text text-transparent"
+            >
+              SUIFLOW
+            </h3>
+            <p class="text-gray-400">
+              Banking Africa's unbanked via USSD and Sui.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-4 text-gray-300">Product</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="/index.html#features" class="text-gray-400 hover:text-cyber-teal"
+                  >Features</a
+                >
+              </li>
+               <li>
+                <a href="/index.html#how-it-works" class="text-gray-400 hover:text-cyber-teal"
+                  >How it Works</a
+                >
+              </li>
+              <li>
+                <a href="/faq.html" class="text-gray-400 hover:text-cyber-teal">FAQ</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-4 text-gray-300">Company</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="text-gray-400 hover:text-cyber-teal"
+                  >About</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-cyber-teal">Blog</a>
+              </li>
+              <li>
+                <a href="/contact.html" class="text-gray-400 hover:text-cyber-teal"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-4 text-gray-300">Legal</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="text-gray-400 hover:text-cyber-teal"
+                  >Privacy</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-cyber-teal"
+                  >Terms</a
+                >
+              </li>
+              <li>
+                <a href="/LICENSE" class="text-gray-400 hover:text-cyber-teal"
+                  >Licenses</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="text-gray-500 text-sm">
+            © 2025 SuiFlow. All rights reserved.
+          </p>
+          <div class="flex space-x-6 mt-4 md:mt-0">
+            <a href="#" class="text-gray-400 hover:text-cyber-teal">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-cyber-teal">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-cyber-teal">
+                <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Flowbite JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+  </body>
+</html>
