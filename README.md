@@ -1,22 +1,22 @@
 # SuiFlow 📱💎
 
-<img width="1336" height="578" alt="image" src="https://github.com/user-attachments/assets/d9878446-538c-4437-9c20-5a62637c84fb" />
-<img width="1333" height="578" alt="image" src="https://github.com/user-attachments/assets/c60847a9-3809-4b81-bf12-55ed03d3a16c" />
-
-
-
 
 > **USSD-Based Blockchain Wallet for Feature Phones**  
-
-
-
-
 > Bringing Sui blockchain technology to emerging markets through familiar mobile money interfaces.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Sui Blockchain](https://img.shields.io/badge/Sui-Blockchain-blue)](https://sui.io/)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-green)](https://nodejs.org/)
 [![Move Language](https://img.shields.io/badge/Move-Smart%20Contracts-purple)](https://move-language.github.io/)
+
+
+<img width="1336" height="578" alt="image" src="https://github.com/user-attachments/assets/d9878446-538c-4437-9c20-5a62637c84fb" />
+
+<img width="1333" height="578" alt="image" src="https://github.com/user-attachments/assets/c60847a9-3809-4b81-bf12-55ed03d3a16c" />
+
+
+
+
 
 ## 🌟 Overview
 
@@ -34,6 +34,7 @@ SuiFlow revolutionizes blockchain accessibility by enabling users with basic fea
 SuiFlow bridges the gap between traditional mobile money and blockchain technology by providing:
 
 - 📱 **USSD Interface**: Familiar `*XXX#` menu system
+
 - 🔐 **PIN-Based Security**: Simple 4-digit PIN authentication
 - ⚡ **Instant Transfers**: Peer-to-peer SUI transactions
 - 💰 **Low Fees**: Blockchain-powered cost efficiency
@@ -556,6 +557,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [Get Started](api/SMART_CONTRACT_GUIDE.md) • [Documentation](contracts/README.md) • [Community](https://discord.gg/suiflow)
 
 </div>
+
+
+
+
+
+
+
+
 
 
 
