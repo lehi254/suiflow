@@ -18,18 +18,26 @@ let operatorKeypair;
  */
 function initSuiService() {
   try {
+    console.log('🔄 Initializing Sui service...');
+    console.log('DEBUG - SUI_OPERATOR_MNEMONICS env:', process.env.SUI_OPERATOR_MNEMONICS ? 'Set' : 'Not set');
+    console.log('DEBUG - SUI_NETWORK env:', process.env.SUI_NETWORK);
+    
+    // Use environment variables directly
+    const suiNetwork = process.env.SUI_NETWORK || 'testnet';
+    const operatorMnemonics = process.env.SUI_OPERATOR_MNEMONICS;
+    
     // Initialize SuiClient based on network
-    const networkUrl = getFullnodeUrl(SUI_NETWORK);
+    const networkUrl = getFullnodeUrl(suiNetwork);
     suiClient = new SuiClient({ url: networkUrl });
     
     // Initialize operator keypair from mnemonics
-    if (!SUI_OPERATOR_MNEMONICS) {
+    if (!operatorMnemonics) {
       throw new Error('SUI_OPERATOR_MNEMONICS not configured');
     }
     
-    operatorKeypair = Ed25519Keypair.deriveKeypair(SUI_OPERATOR_MNEMONICS);
+    operatorKeypair = Ed25519Keypair.deriveKeypair(operatorMnemonics);
     
-    console.log(`✅ Sui service initialized on ${SUI_NETWORK}`);
+    console.log(`✅ Sui service initialized on ${suiNetwork}`);
     console.log(`📍 Operator address: ${operatorKeypair.getPublicKey().toSuiAddress()}`);
   } catch (error) {
     console.error('❌ Failed to initialize Sui service:', error);
