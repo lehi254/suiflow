@@ -2,7 +2,7 @@ import express from 'express';
 import { createTransactionSchema, getTransactionsSchema } from '../schemas/transaction.js';
 import { validateRequest, validateQuery, verifyToken, checkUserStatus } from '../middleware/auth.js';
 import { addTransaction, getUserTransactions, getUser, updateUser } from '../services/database.js';
-import { sendSui, getBalance, isValidSuiAddress } from '../services/sui.js';
+import { internalTransfer, getSuiFlowWalletBalance, sendSui, getBalance, isValidSuiAddress } from '../services/sui-contracts.js';
 import { decryptMnemonic, verifyPinPhone } from '../utils/encryption.js';
 import { TRANSACTION_STATUS, MAX_FAILED_ATTEMPTS } from '../constants.js';
 
@@ -62,9 +62,20 @@ router.post('/new', verifyToken, checkUserStatus, validateRequest(createTransact
       await updateUser(senderPhone, { failedAttempts: 0 });
     }
     
-    // Check sender's balance
-    console.log(`🔄 Checking balance for ${senderUser.suiAddress}`);
-    const senderBalance = await getBalance(senderUser.suiAddress);
+    // Check sender's balance - use smart contract wallet if available
+    let senderBalance;
+    if (senderUser.walletObjectId) {
+      console.log(`🔄 Checking balance for SuiFlowWallet ${senderUser.walletObjectId}`);
+      try {
+        senderBalance = await getSuiFlowWalletBalance(senderUser.walletObjectId);
+      } catch (contractError) {
+        console.warn('⚠️ Failed to get smart contract balance, falling back to address balance:', contractError.message);
+        senderBalance = await getBalance(senderUser.suiAddress);
+      }
+    } else {
+      console.log(`🔄 Checking balance for address ${senderUser.suiAddress}`);
+      senderBalance = await getBalance(senderUser.suiAddress);
+    }
     
     if (senderBalance < amount) {
       return res.status(400).json({
@@ -97,9 +108,22 @@ router.post('/new', verifyToken, checkUserStatus, validateRequest(createTransact
       // Decrypt sender's mnemonic
       const decryptedMnemonic = decryptMnemonic(senderUser.encryptedMnemonic, pin);
       
-      // Send SUI transaction
-      console.log(`🔄 Sending ${amount} SUI from ${senderUser.suiAddress} to ${receiverUser.suiAddress}`);
-      const result = await sendSui(decryptedMnemonic, receiverUser.suiAddress, amount);
+      // Choose transfer method based on wallet types
+      let result;
+      if (senderUser.walletObjectId && receiverUser.walletObjectId) {
+        // Both users have smart contract wallets - use internal transfer (more efficient)
+        console.log(`🔄 Internal transfer: ${amount} SUI from wallet ${senderUser.walletObjectId} to wallet ${receiverUser.walletObjectId}`);
+        result = await internalTransfer(
+          senderUser.walletObjectId,
+          receiverUser.walletObjectId,
+          decryptedMnemonic,
+          amount
+        );
+      } else {
+        // At least one user doesn't have smart contract wallet - use regular coin transfer
+        console.log(`🔄 Regular transfer: ${amount} SUI from ${senderUser.suiAddress} to ${receiverUser.suiAddress}`);
+        result = await sendSui(decryptedMnemonic, receiverUser.suiAddress, amount);
+      }
       
       // Clear decrypted mnemonic from memory immediately
       // (JavaScript garbage collection will handle this, but we're being explicit)

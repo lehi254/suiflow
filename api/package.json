@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "node --watch src/app.js"
+    "dev": "node --watch src/app.js",
+    "deploy-contracts": "node deploy-contracts.js",
+    "migrate-users": "node migrate-users.js"
   },
   "keywords": [
     "sui",

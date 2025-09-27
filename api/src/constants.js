@@ -5,6 +5,10 @@ export const ENCRYPTION_SALT = process.env.ENCRYPTION_SALT;
 export const SUI_NETWORK = process.env.SUI_NETWORK || 'testnet';
 export const SUI_OPERATOR_MNEMONICS = process.env.SUI_OPERATOR_MNEMONICS;
 
+// Smart Contract constants
+export const CONTRACTS_PACKAGE_ID = process.env.CONTRACTS_PACKAGE_ID;
+export const ADMIN_CAP_OBJECT_ID = process.env.ADMIN_CAP_OBJECT_ID;
+
 // Transaction status constants
 export const TRANSACTION_STATUS = {
   PENDING: 'pending',

@@ -2,8 +2,8 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import { registerAdminSchema, loginAdminSchema, getUsersSchema, getAllTransactionsSchema } from '../schemas/admin.js';
 import { validateRequest, validateQuery, verifyToken, requireRole, generateToken } from '../middleware/auth.js';
-import { registerAdmin, getAdmin, getUsers, getAllTransactions } from '../services/database.js';
-import { getOperatorBalance } from '../services/sui.js';
+import { registerAdmin, getAdmin, getUsers, getAllTransactions, getUser } from '../services/database.js';
+import { getOperatorBalance, freezeUserWallet, unfreezeUserWallet } from '../services/sui-contracts.js';
 import { USER_ROLES } from '../constants.js';
 
 const router = express.Router();
@@ -413,6 +413,118 @@ router.get('/system/health', verifyToken, requireRole([USER_ROLES.ADMIN]), async
     res.status(500).json({
       success: false,
       error: 'Failed to get system health',
+      details: error.message
+    });
+  }
+});
+
+/**
+ * POST /api/admin/wallet/freeze
+ * Freeze a user's smart contract wallet
+ */
+router.post('/wallet/freeze', verifyToken, requireRole(USER_ROLES.ADMIN), async (req, res) => {
+  try {
+    const { phone } = req.body;
+    
+    if (!phone) {
+      return res.status(400).json({
+        success: false,
+        error: 'Phone number is required'
+      });
+    }
+    
+    // Get user data
+    const user = await getUser(phone);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+    
+    if (!user.walletObjectId) {
+      return res.status(400).json({
+        success: false,
+        error: 'User does not have a smart contract wallet'
+      });
+    }
+    
+    // Freeze the wallet
+    const txHash = await freezeUserWallet(user.walletObjectId);
+    
+    console.log(`✅ Admin froze wallet ${user.walletObjectId} for user ${phone}`);
+    
+    res.json({
+      success: true,
+      message: 'Wallet frozen successfully',
+      data: {
+        phone,
+        walletObjectId: user.walletObjectId,
+        txHash,
+        action: 'freeze'
+      }
+    });
+  } catch (error) {
+    console.error('❌ Error freezing wallet:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to freeze wallet',
+      details: error.message
+    });
+  }
+});
+
+/**
+ * POST /api/admin/wallet/unfreeze
+ * Unfreeze a user's smart contract wallet
+ */
+router.post('/wallet/unfreeze', verifyToken, requireRole(USER_ROLES.ADMIN), async (req, res) => {
+  try {
+    const { phone } = req.body;
+    
+    if (!phone) {
+      return res.status(400).json({
+        success: false,
+        error: 'Phone number is required'
+      });
+    }
+    
+    // Get user data
+    const user = await getUser(phone);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+    
+    if (!user.walletObjectId) {
+      return res.status(400).json({
+        success: false,
+        error: 'User does not have a smart contract wallet'
+      });
+    }
+    
+    // Unfreeze the wallet
+    const txHash = await unfreezeUserWallet(user.walletObjectId);
+    
+    console.log(`✅ Admin unfroze wallet ${user.walletObjectId} for user ${phone}`);
+    
+    res.json({
+      success: true,
+      message: 'Wallet unfrozen successfully',
+      data: {
+        phone,
+        walletObjectId: user.walletObjectId,
+        txHash,
+        action: 'unfreeze'
+      }
+    });
+  } catch (error) {
+    console.error('❌ Error unfreezing wallet:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to unfreeze wallet',
       details: error.message
     });
   }

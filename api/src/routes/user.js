@@ -2,7 +2,7 @@ import express from 'express';
 import { registerUserSchema, loginUserSchema } from '../schemas/user.js';
 import { validateRequest, verifyToken, checkUserStatus, generateToken } from '../middleware/auth.js';
 import { registerUser, getUser, updateUser } from '../services/database.js';
-import { createUserWallet, fundNewUserAccount, getBalance } from '../services/sui.js';
+import { createUserWallet, createSuiFlowWallet, fundNewUserAccount, getSuiFlowWalletBalance } from '../services/sui-contracts.js';
 import { encryptMnemonic, hashPinPhone, verifyPinPhone } from '../utils/encryption.js';
 import { USER_ROLES, MAX_FAILED_ATTEMPTS } from '../constants.js';
 
@@ -35,6 +35,23 @@ router.post('/new', validateRequest(registerUserSchema), async (req, res) => {
     // Hash PIN with phone for storage
     const pinHash = hashPinPhone(pin, phone);
     
+    // Create SuiFlowWallet smart contract object
+    let walletObjectId = null;
+    try {
+      console.log(`🔄 Creating SuiFlowWallet contract for user ${phone}`);
+      const contractResult = await createSuiFlowWallet(walletInfo.mnemonic);
+      walletObjectId = contractResult.walletObjectId;
+      console.log(`✅ Created SuiFlowWallet contract: ${walletObjectId}`);
+    } catch (contractError) {
+      console.error('⚠️ Failed to create SuiFlowWallet contract:', contractError);
+      // Continue without contract wallet for now - user can create it later
+      // return res.status(500).json({
+      //   success: false,
+      //   error: 'Failed to create smart contract wallet',
+      //   details: contractError.message
+      // });
+    }
+    
     // Register user in database
     const userData = {
       phone,
@@ -42,7 +59,8 @@ router.post('/new', validateRequest(registerUserSchema), async (req, res) => {
       suiAddress: walletInfo.address,
       publicKey: walletInfo.publicKey,
       encryptedMnemonic,
-      pinHash
+      pinHash,
+      walletObjectId
     };
     
     await registerUser(userData);
@@ -65,7 +83,8 @@ router.post('/new', validateRequest(registerUserSchema), async (req, res) => {
       data: {
         phone,
         fullName,
-        suiAddress: walletInfo.address
+        suiAddress: walletInfo.address,
+        walletObjectId
       }
     });
   } catch (error) {
@@ -166,9 +185,22 @@ router.get('/accountInfo', verifyToken, checkUserStatus, async (req, res) => {
   try {
     const user = req.userData;
     
-    // Get current balance from Sui blockchain
-    console.log(`🔄 Getting balance for ${user.suiAddress}`);
-    const balance = await getBalance(user.suiAddress);
+    // Get current balance - use smart contract wallet if available, otherwise use regular address
+    let balance;
+    if (user.walletObjectId) {
+      console.log(`🔄 Getting balance from SuiFlowWallet ${user.walletObjectId}`);
+      try {
+        balance = await getSuiFlowWalletBalance(user.walletObjectId);
+      } catch (contractError) {
+        console.warn('⚠️ Failed to get smart contract balance, falling back to address balance:', contractError.message);
+        const { getBalance } = await import('../services/sui-contracts.js');
+        balance = await getBalance(user.suiAddress);
+      }
+    } else {
+      console.log(`🔄 Getting balance for address ${user.suiAddress}`);
+      const { getBalance } = await import('../services/sui-contracts.js');
+      balance = await getBalance(user.suiAddress);
+    }
     
     res.json({
       success: true,
@@ -176,10 +208,12 @@ router.get('/accountInfo', verifyToken, checkUserStatus, async (req, res) => {
         phone: user.phone,
         fullName: user.fullName,
         suiAddress: user.suiAddress,
+        walletObjectId: user.walletObjectId,
         balance: {
           sui: balance,
           formatted: `${balance.toFixed(6)} SUI`
         },
+        walletType: user.walletObjectId ? 'smart_contract' : 'regular',
         accountStatus: 'active',
         failedAttempts: user.failedAttempts,
         createdAt: user.createdAt
@@ -203,8 +237,20 @@ router.get('/balance', verifyToken, checkUserStatus, async (req, res) => {
   try {
     const user = req.userData;
     
-    // Get current balance from Sui blockchain
-    const balance = await getBalance(user.suiAddress);
+    // Get current balance - use smart contract wallet if available, otherwise use regular address
+    let balance;
+    if (user.walletObjectId) {
+      try {
+        balance = await getSuiFlowWalletBalance(user.walletObjectId);
+      } catch (contractError) {
+        console.warn('⚠️ Failed to get smart contract balance, falling back to address balance:', contractError.message);
+        const { getBalance } = await import('../services/sui-contracts.js');
+        balance = await getBalance(user.suiAddress);
+      }
+    } else {
+      const { getBalance } = await import('../services/sui-contracts.js');
+      balance = await getBalance(user.suiAddress);
+    }
     
     res.json({
       success: true,

@@ -27,11 +27,22 @@ export function initDB() {
           publicKey TEXT NOT NULL,
           encryptedMnemonic TEXT NOT NULL,
           pinHash TEXT NOT NULL,
+          walletObjectId TEXT UNIQUE,
           failedAttempts INTEGER DEFAULT 0,
           createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
       `);
+
+      // Add walletObjectId column if it doesn't exist (migration)
+      db.run(`
+        ALTER TABLE users ADD COLUMN walletObjectId TEXT UNIQUE
+      `, (err) => {
+        // Ignore error if column already exists
+        if (err && !err.message.includes('duplicate column name')) {
+          console.warn('Warning adding walletObjectId column:', err.message);
+        }
+      });
 
       // Transactions table
       db.run(`
@@ -77,14 +88,14 @@ export function initDB() {
  */
 export function registerUser(userData) {
   return new Promise((resolve, reject) => {
-    const { phone, fullName, suiAddress, publicKey, encryptedMnemonic, pinHash } = userData;
+    const { phone, fullName, suiAddress, publicKey, encryptedMnemonic, pinHash, walletObjectId } = userData;
     
     const query = `
-      INSERT INTO users (phone, fullName, suiAddress, publicKey, encryptedMnemonic, pinHash)
-      VALUES (?, ?, ?, ?, ?, ?)
+      INSERT INTO users (phone, fullName, suiAddress, publicKey, encryptedMnemonic, pinHash, walletObjectId)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
     
-    db.run(query, [phone, fullName, suiAddress, publicKey, encryptedMnemonic, pinHash], function(err) {
+    db.run(query, [phone, fullName, suiAddress, publicKey, encryptedMnemonic, pinHash, walletObjectId], function(err) {
       if (err) {
         if (err.code === 'SQLITE_CONSTRAINT_UNIQUE') {
           reject(new Error('User with this phone number or Sui address already exists'));
@@ -92,7 +103,7 @@ export function registerUser(userData) {
           reject(err);
         }
       } else {
-        resolve({ phone, fullName, suiAddress, publicKey });
+        resolve({ phone, fullName, suiAddress, publicKey, walletObjectId });
       }
     });
   });
