@@ -313,6 +313,188 @@ GET    /api/admin/health              # System status
 - **2.7B** people with limited internet access
 - **Growth Rate**: 25%+ annual mobile money growth
 
+## 💎 Advanced Features
+
+### 🪙 Multi-Token Support
+
+#### USDT Integration
+SuiFlow supports USDT (Tether) for stable value transactions, addressing crypto volatility concerns:
+
+**Why USDT?**
+- 🔒 **Price Stability**: Pegged to USD, eliminates volatility risk
+- 🌍 **Global Acceptance**: Widely recognized and trusted stablecoin
+- 💱 **Easy Conversion**: Seamless exchange with local currencies
+- 🏪 **Merchant Friendly**: Businesses prefer stable value for payments
+
+**How It Works:**
+```
+*123# → Main Menu
+3. USDT Wallet
+   → Balance: 50.00 USDT
+   → 1. Send USDT
+   → 2. Convert SUI ↔ USDT
+   → 3. Buy USDT with Fiat
+```
+
+**USDT Features:**
+- ✅ **Stable Transfers**: Send/receive USDT between users
+- ✅ **SUI/USDT Exchange**: Built-in DEX integration
+- ✅ **Fiat On/Off Ramps**: Direct purchase with mobile money
+- ✅ **Merchant Payments**: Pay bills and services in stable currency
+
+### 💰 Remittance & Fiat Integration
+
+#### Cross-Border Money Transfers
+Transform traditional remittances with blockchain efficiency:
+
+**Traditional Remittance Problems:**
+- 💸 **High Fees**: 6-12% of transfer amount
+- ⏰ **Slow Processing**: 3-7 days for delivery
+- 📍 **Limited Access**: Requires physical locations
+- 📋 **Complex Process**: Multiple forms and verification
+
+**SuiFlow Remittance Solution:**
+- 💚 **Low Fees**: 0.5-2% transaction cost
+- ⚡ **Instant Transfer**: Seconds to minutes delivery
+- 📱 **Mobile Access**: Available on any phone via USSD
+- 🔐 **Secure & Transparent**: Blockchain-verified transactions
+
+#### Fiat Currency Integration
+
+**Supported Currencies:**
+- 🇰🇪 **KES** (Kenyan Shilling) - M-Pesa integration
+- 🇳🇬 **NGN** (Nigerian Naira) - Bank transfer support
+- 🇬🇭 **GHS** (Ghanaian Cedi) - Mobile money integration
+- 🇺🇬 **UGX** (Ugandan Shilling) - Airtel Money support
+- 🇺🇸 **USD** - Global reserve currency
+
+**Fiat On-Ramp Process:**
+```
+*123# → Buy Crypto
+1. Select Currency: KES
+2. Enter Amount: 1000 KES
+3. Choose Token: USDT
+4. Payment Method: M-Pesa
+5. Confirm: Get 6.67 USDT
+6. ✅ USDT received in wallet!
+```
+
+**Fiat Off-Ramp Process:**
+```
+*123# → Sell Crypto  
+1. Select Token: USDT
+2. Enter Amount: 10 USDT
+3. Target Currency: KES
+4. Receive Method: M-Pesa
+5. Confirm: Get 1,500 KES
+6. ✅ Money sent to M-Pesa!
+```
+
+#### Exchange Rate Management
+- 📊 **Real-Time Rates**: Live exchange rate feeds
+- 🔒 **Rate Lock**: Lock rates for 5 minutes during transaction
+- 📈 **Rate History**: Track exchange rate trends
+- 💱 **Best Rate Routing**: Automatic best price execution
+
+#### Partner Integration
+**Mobile Money Providers:**
+- 📱 **M-Pesa** (Kenya, Tanzania) - Direct API integration
+- 📱 **Airtel Money** (Multiple countries) - Seamless transfers
+- 📱 **MTN Mobile Money** (Ghana, Uganda) - USSD integration
+- 📱 **Orange Money** (Senegal, Mali) - API partnerships
+
+**Banking Partners:**
+- 🏦 **Local Banks** - Direct bank transfer support
+- 🏦 **Digital Banks** - API-first integration
+- 🏦 **Microfinance** - Small amount transfer specialists
+- 🏦 **Credit Unions** - Community-focused partnerships
+
+### 🌍 Remittance Use Cases
+
+#### Family Support
+```
+📍 John (USA) → 👨‍👩‍👧‍👦 Family (Kenya)
+
+Traditional: $100 → $88 (after fees) → 3 days
+SuiFlow: $100 → $98 (after fees) → 30 seconds
+
+Annual Savings: $144 per family
+```
+
+#### Business Payments
+```
+📍 Company (UK) → 💼 Supplier (Ghana)
+
+Traditional: £1000 → £920 (after fees) → 5 days  
+SuiFlow: £1000 → £985 (after fees) → 2 minutes
+
+Cost Reduction: 75% less fees, 99% faster
+```
+
+#### Emergency Transfers
+```
+📍 Diaspora → 🚨 Emergency (Home Country)
+
+Traditional: High fees + slow processing = crisis
+SuiFlow: Instant delivery + low fees = immediate help
+```
+
+### 💳 Advanced Payment Features
+
+#### Bill Payment Integration
+```
+*123# → Pay Bills
+1. Electricity: Kenya Power
+2. Water: Nairobi Water  
+3. School Fees: Local Schools
+4. Insurance: Medical Cover
+5. Loans: Microfinance
+```
+
+#### Merchant Payment System
+- 🏪 **QR Code Payments**: Generate payment codes
+- 📱 **USSD Merchant Codes**: *123*MERCHANT*AMOUNT#
+- 🧾 **Receipt System**: SMS confirmations
+- 📊 **Business Analytics**: Transaction reporting
+
+#### Savings & Investment
+- 💰 **High-Yield Savings**: Earn interest on USDT deposits
+- 📈 **DeFi Integration**: Access to Sui DeFi protocols
+- 🎯 **Goal-Based Saving**: Save for specific targets
+- 📅 **Automated Savings**: Regular deposit scheduling
+
+### 🔧 Technical Implementation
+
+#### Multi-Token Architecture
+```move
+// Smart Contract Support
+public struct MultiTokenWallet has key, store {
+    id: UID,
+    sui_balance: Balance<SUI>,
+    usdt_balance: Balance<USDT>,
+    owner_address: address,
+    is_frozen: bool,
+}
+```
+
+#### Exchange Integration
+```javascript
+// DEX Integration API
+const exchangeRate = await getExchangeRate('SUI', 'USDT');
+const result = await swapTokens(fromToken, toToken, amount);
+```
+
+#### Fiat Gateway API
+```javascript
+// Mobile Money Integration
+const payment = await mobileMoney.pay({
+  provider: 'mpesa',
+  phone: '+254700123456',
+  amount: 1000,
+  currency: 'KES'
+});
+```
+
 ## 🤝 Contributing
 
 We welcome contributions from the community! Here's how you can help:
@@ -351,18 +533,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 📖 **Docs**: [docs.suiflow.org](https://docs.suiflow.org)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/lehi254/suiflow/issues)
 
-## 🏆 Awards & Recognition
+## 📄 License
 
-- 🥇 **Sui Hackathon Winner** - Best Mobile Innovation 2024
-- 🌟 **Featured Project** - Sui Foundation Spotlight
-- 🚀 **Startup Accelerator** - Selected for Blockchain Incubator
-
-## 🙏 Acknowledgments
-
-- **Sui Foundation** - For blockchain infrastructure
-- **Move Language Team** - For smart contract capabilities
-- **Open Source Community** - For tools and libraries
-- **Beta Testers** - Early feedback and testing
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
