@@ -1,13 +1,13 @@
-import sqlite3 from 'sqlite3';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { TRANSACTION_STATUS } from '../constants.js';
+import sqlite3 from "sqlite3";
+import path from "path";
+import { fileURLToPath } from "url";
+import { TRANSACTION_STATUS } from "../constants.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Database file path
-const DB_PATH = path.join(__dirname, '../../suiflow.db');
+const DB_PATH = path.join(__dirname, "../../suiflow.db");
 
 // Initialize SQLite database
 const db = new sqlite3.Database(DB_PATH);
@@ -35,14 +35,17 @@ export function initDB() {
       `);
 
       // Add walletObjectId column if it doesn't exist (migration)
-      db.run(`
+      db.run(
+        `
         ALTER TABLE users ADD COLUMN walletObjectId TEXT UNIQUE
-      `, (err) => {
-        // Ignore error if column already exists
-        if (err && !err.message.includes('duplicate column name')) {
-          console.warn('Warning adding walletObjectId column:', err.message);
+      `,
+        (err) => {
+          // Ignore error if column already exists
+          if (err && !err.message.includes("duplicate column name")) {
+            console.warn("Warning adding walletObjectId column:", err.message);
+          }
         }
-      });
+      );
 
       // Transactions table
       db.run(`
@@ -61,7 +64,8 @@ export function initDB() {
       `);
 
       // Admins table
-      db.run(`
+      db.run(
+        `
         CREATE TABLE IF NOT EXISTS admins (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           fullName TEXT NOT NULL,
@@ -70,13 +74,15 @@ export function initDB() {
           createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
-      `, (err) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve();
+      `,
+        (err) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
         }
-      });
+      );
     });
   });
 }
@@ -88,24 +94,48 @@ export function initDB() {
  */
 export function registerUser(userData) {
   return new Promise((resolve, reject) => {
-    const { phone, fullName, suiAddress, publicKey, encryptedMnemonic, pinHash, walletObjectId } = userData;
-    
+    const {
+      phone,
+      fullName,
+      suiAddress,
+      publicKey,
+      encryptedMnemonic,
+      pinHash,
+      walletObjectId,
+    } = userData;
+
     const query = `
       INSERT INTO users (phone, fullName, suiAddress, publicKey, encryptedMnemonic, pinHash, walletObjectId)
       VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
-    
-    db.run(query, [phone, fullName, suiAddress, publicKey, encryptedMnemonic, pinHash, walletObjectId], function(err) {
-      if (err) {
-        if (err.code === 'SQLITE_CONSTRAINT_UNIQUE') {
-          reject(new Error('User with this phone number or Sui address already exists'));
+
+    db.run(
+      query,
+      [
+        phone,
+        fullName,
+        suiAddress,
+        publicKey,
+        encryptedMnemonic,
+        pinHash,
+        walletObjectId,
+      ],
+      function (err) {
+        if (err) {
+          if (err.code === "SQLITE_CONSTRAINT_UNIQUE") {
+            reject(
+              new Error(
+                "User with this phone number or Sui address already exists"
+              )
+            );
+          } else {
+            reject(err);
+          }
         } else {
-          reject(err);
+          resolve({ phone, fullName, suiAddress, publicKey, walletObjectId });
         }
-      } else {
-        resolve({ phone, fullName, suiAddress, publicKey, walletObjectId });
       }
-    });
+    );
   });
 }
 
@@ -119,7 +149,7 @@ export function getUser(phone) {
     const query = `
       SELECT * FROM users WHERE phone = ?
     `;
-    
+
     db.get(query, [phone], (err, row) => {
       if (err) {
         reject(err);
@@ -138,29 +168,31 @@ export function getUser(phone) {
  */
 export function updateUser(phone, updateData) {
   return new Promise((resolve, reject) => {
-    const allowedFields = ['failedAttempts', 'pinHash', 'fullName'];
-    const fields = Object.keys(updateData).filter(key => allowedFields.includes(key));
-    
+    const allowedFields = ["failedAttempts", "pinHash", "fullName"];
+    const fields = Object.keys(updateData).filter((key) =>
+      allowedFields.includes(key)
+    );
+
     if (fields.length === 0) {
-      reject(new Error('No valid fields to update'));
+      reject(new Error("No valid fields to update"));
       return;
     }
-    
-    const setClause = fields.map(field => `${field} = ?`).join(', ');
-    const values = fields.map(field => updateData[field]);
+
+    const setClause = fields.map((field) => `${field} = ?`).join(", ");
+    const values = fields.map((field) => updateData[field]);
     values.push(phone);
-    
+
     const query = `
       UPDATE users 
       SET ${setClause}, updatedAt = CURRENT_TIMESTAMP 
       WHERE phone = ?
     `;
-    
-    db.run(query, values, function(err) {
+
+    db.run(query, values, function (err) {
       if (err) {
         reject(err);
       } else if (this.changes === 0) {
-        reject(new Error('User not found'));
+        reject(new Error("User not found"));
       } else {
         resolve(true);
       }
@@ -175,20 +207,31 @@ export function updateUser(phone, updateData) {
  */
 export function addTransaction(transactionData) {
   return new Promise((resolve, reject) => {
-    const { senderPhone, receiverPhone, amount, txHash, status = TRANSACTION_STATUS.PENDING, errorMessage } = transactionData;
-    
+    const {
+      senderPhone,
+      receiverPhone,
+      amount,
+      txHash,
+      status = TRANSACTION_STATUS.PENDING,
+      errorMessage,
+    } = transactionData;
+
     const query = `
       INSERT INTO transactions (senderPhone, receiverPhone, amount, txHash, status, errorMessage)
       VALUES (?, ?, ?, ?, ?, ?)
     `;
-    
-    db.run(query, [senderPhone, receiverPhone, amount, txHash, status, errorMessage], function(err) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(this.lastID);
+
+    db.run(
+      query,
+      [senderPhone, receiverPhone, amount, txHash, status, errorMessage],
+      function (err) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(this.lastID);
+        }
       }
-    });
+    );
   });
 }
 
@@ -212,7 +255,7 @@ export function getUserTransactions(phone, limit = 50, offset = 0) {
       ORDER BY t.timestamp DESC
       LIMIT ? OFFSET ?
     `;
-    
+
     db.all(query, [phone, phone, limit, offset], (err, rows) => {
       if (err) {
         reject(err);
@@ -237,7 +280,7 @@ export function getUsers(limit = 100, offset = 0) {
       ORDER BY createdAt DESC
       LIMIT ? OFFSET ?
     `;
-    
+
     db.all(query, [limit, offset], (err, rows) => {
       if (err) {
         reject(err);
@@ -266,7 +309,7 @@ export function getAllTransactions(limit = 100, offset = 0) {
       ORDER BY t.timestamp DESC
       LIMIT ? OFFSET ?
     `;
-    
+
     db.all(query, [limit, offset], (err, rows) => {
       if (err) {
         reject(err);
@@ -285,23 +328,32 @@ export function getAllTransactions(limit = 100, offset = 0) {
  * @param {string} errorMessage - Error message (optional)
  * @returns {Promise} - Promise that resolves with success
  */
-export function updateTransaction(transactionId, status, txHash = null, errorMessage = null) {
+export function updateTransaction(
+  transactionId,
+  status,
+  txHash = null,
+  errorMessage = null
+) {
   return new Promise((resolve, reject) => {
     const query = `
       UPDATE transactions 
       SET status = ?, txHash = ?, errorMessage = ?
       WHERE id = ?
     `;
-    
-    db.run(query, [status, txHash, errorMessage, transactionId], function(err) {
-      if (err) {
-        reject(err);
-      } else if (this.changes === 0) {
-        reject(new Error('Transaction not found'));
-      } else {
-        resolve(true);
+
+    db.run(
+      query,
+      [status, txHash, errorMessage, transactionId],
+      function (err) {
+        if (err) {
+          reject(err);
+        } else if (this.changes === 0) {
+          reject(new Error("Transaction not found"));
+        } else {
+          resolve(true);
+        }
       }
-    });
+    );
   });
 }
 
@@ -313,16 +365,16 @@ export function updateTransaction(transactionId, status, txHash = null, errorMes
 export function registerAdmin(adminData) {
   return new Promise((resolve, reject) => {
     const { fullName, email, password } = adminData;
-    
+
     const query = `
       INSERT INTO admins (fullName, email, password)
       VALUES (?, ?, ?)
     `;
-    
-    db.run(query, [fullName, email, password], function(err) {
+
+    db.run(query, [fullName, email, password], function (err) {
       if (err) {
-        if (err.code === 'SQLITE_CONSTRAINT_UNIQUE') {
-          reject(new Error('Admin with this email already exists'));
+        if (err.code === "SQLITE_CONSTRAINT_UNIQUE") {
+          reject(new Error("Admin with this email already exists"));
         } else {
           reject(err);
         }
@@ -343,7 +395,7 @@ export function getAdmin(email) {
     const query = `
       SELECT * FROM admins WHERE email = ?
     `;
-    
+
     db.get(query, [email], (err, row) => {
       if (err) {
         reject(err);
