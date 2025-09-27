@@ -1,6 +1,16 @@
 # SuiFlow 📱💎
 
+<img width="1336" height="578" alt="image" src="https://github.com/user-attachments/assets/d9878446-538c-4437-9c20-5a62637c84fb" />
+<img width="1333" height="578" alt="image" src="https://github.com/user-attachments/assets/c60847a9-3809-4b81-bf12-55ed03d3a16c" />
+
+
+
+
 > **USSD-Based Blockchain Wallet for Feature Phones**  
+
+
+
+
 > Bringing Sui blockchain technology to emerging markets through familiar mobile money interfaces.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -546,3 +556,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [Get Started](api/SMART_CONTRACT_GUIDE.md) • [Documentation](contracts/README.md) • [Community](https://discord.gg/suiflow)
 
 </div>
+
+
+
+
+
+
