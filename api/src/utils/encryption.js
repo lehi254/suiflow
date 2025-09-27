@@ -12,9 +12,12 @@ export function encryptMnemonic(mnemonic, pin) {
     throw new Error('Mnemonic and PIN are required for encryption');
   }
 
+  // Ensure we have a valid encryption salt
+  const salt = ENCRYPTION_SALT || 'default-suiflow-salt-2024';
+
   // Derive key from PIN and salt using PBKDF2
-  const key = CryptoJS.PBKDF2(pin, ENCRYPTION_SALT, {
-    keySize: 256 / 32, // 256 bits
+  const key = CryptoJS.PBKDF2(pin, salt, {
+    keySize: 256 / 32, // 256 bits = 8 words of 32 bits each
     iterations: 10000
   });
 
@@ -36,9 +39,12 @@ export function decryptMnemonic(encryptedMnemonic, pin) {
   }
 
   try {
+    // Ensure we have a valid encryption salt
+    const salt = ENCRYPTION_SALT || 'default-suiflow-salt-2024';
+
     // Derive key from PIN and salt using PBKDF2
-    const key = CryptoJS.PBKDF2(pin, ENCRYPTION_SALT, {
-      keySize: 256 / 32, // 256 bits
+    const key = CryptoJS.PBKDF2(pin, salt, {
+      keySize: 256 / 32, // 256 bits = 8 words of 32 bits each
       iterations: 10000
     });
 
@@ -70,8 +76,11 @@ export function hashPinPhone(pin, phone) {
   // Combine PIN and phone for additional security
   const combined = `${pin}:${phone}`;
   
+  // Ensure we have a valid encryption salt
+  const salt = ENCRYPTION_SALT || 'default-suiflow-salt-2024';
+  
   // Create hash using PBKDF2 with salt
-  const hash = CryptoJS.PBKDF2(combined, ENCRYPTION_SALT, {
+  const hash = CryptoJS.PBKDF2(combined, salt, {
     keySize: 512 / 32, // 512 bits
     iterations: 100000 // Higher iterations for password hashing
   }).toString();
