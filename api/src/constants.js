@@ -18,17 +18,7 @@ export const USER_ROLES = {
   ADMIN: 'admin'
 };
 
-// USSD session constants
-export const USSD_STATES = {
-  MAIN_MENU: 'main_menu',
-  REGISTER_NAME: 'register_name',
-  REGISTER_PIN: 'register_pin',
-  REGISTER_CONFIRM_PIN: 'register_confirm_pin',
-  SEND_PHONE: 'send_phone',
-  SEND_AMOUNT: 'send_amount',
-  SEND_PIN: 'send_pin',
-  BALANCE_PIN: 'balance_pin'
-};
+// USSD_STATES removed - no longer needed in stateless implementation
 
 // Funding amount for new users (0.02 SUI)
 export const NEW_USER_FUNDING_AMOUNT = 0.02;
