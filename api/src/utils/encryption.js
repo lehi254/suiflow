@@ -1,5 +1,5 @@
-import CryptoJS from 'crypto-js';
-import { ENCRYPTION_SALT } from '../constants.js';
+import CryptoJS from "crypto-js";
+import { ENCRYPTION_SALT } from "../constants.js";
 
 /**
  * Encrypts a Sui mnemonic phrase using AES encryption
@@ -9,21 +9,21 @@ import { ENCRYPTION_SALT } from '../constants.js';
  */
 export function encryptMnemonic(mnemonic, pin) {
   if (!mnemonic || !pin) {
-    throw new Error('Mnemonic and PIN are required for encryption');
+    throw new Error("Mnemonic and PIN are required for encryption");
   }
 
   // Ensure we have a valid encryption salt
-  const salt = ENCRYPTION_SALT || 'default-suiflow-salt-2024';
+  const salt = ENCRYPTION_SALT || "default-suiflow-salt-2024";
 
   // Derive key from PIN and salt using PBKDF2
   const key = CryptoJS.PBKDF2(pin, salt, {
     keySize: 256 / 32, // 256 bits = 8 words of 32 bits each
-    iterations: 10000
+    iterations: 10000,
   });
 
   // Encrypt the mnemonic using AES
   const encrypted = CryptoJS.AES.encrypt(mnemonic, key.toString()).toString();
-  
+
   return encrypted;
 }
 
@@ -35,30 +35,32 @@ export function encryptMnemonic(mnemonic, pin) {
  */
 export function decryptMnemonic(encryptedMnemonic, pin) {
   if (!encryptedMnemonic || !pin) {
-    throw new Error('Encrypted mnemonic and PIN are required for decryption');
+    throw new Error("Encrypted mnemonic and PIN are required for decryption");
   }
 
   try {
     // Ensure we have a valid encryption salt
-    const salt = ENCRYPTION_SALT || 'default-suiflow-salt-2024';
+    const salt = ENCRYPTION_SALT || "default-suiflow-salt-2024";
 
     // Derive key from PIN and salt using PBKDF2
     const key = CryptoJS.PBKDF2(pin, salt, {
       keySize: 256 / 32, // 256 bits = 8 words of 32 bits each
-      iterations: 10000
+      iterations: 10000,
     });
 
     // Decrypt the mnemonic using AES
     const decrypted = CryptoJS.AES.decrypt(encryptedMnemonic, key.toString());
     const mnemonic = decrypted.toString(CryptoJS.enc.Utf8);
-    
+
     if (!mnemonic) {
-      throw new Error('Invalid PIN or corrupted data');
+      throw new Error("Invalid PIN or corrupted data");
     }
-    
+
     return mnemonic;
   } catch (error) {
-    throw new Error('Failed to decrypt mnemonic: Invalid PIN or corrupted data');
+    throw new Error(
+      "Failed to decrypt mnemonic: Invalid PIN or corrupted data"
+    );
   }
 }
 
@@ -70,19 +72,19 @@ export function decryptMnemonic(encryptedMnemonic, pin) {
  */
 export function hashPinPhone(pin, phone) {
   if (!pin || !phone) {
-    throw new Error('PIN and phone number are required for hashing');
+    throw new Error("PIN and phone number are required for hashing");
   }
 
   // Combine PIN and phone for additional security
   const combined = `${pin}:${phone}`;
-  
+
   // Ensure we have a valid encryption salt
-  const salt = ENCRYPTION_SALT || 'default-suiflow-salt-2024';
-  
+  const salt = ENCRYPTION_SALT || "default-suiflow-salt-2024";
+
   // Create hash using PBKDF2 with salt
   const hash = CryptoJS.PBKDF2(combined, salt, {
     keySize: 512 / 32, // 512 bits
-    iterations: 100000 // Higher iterations for password hashing
+    iterations: 100000, // Higher iterations for password hashing
   }).toString();
 
   return hash;
@@ -103,7 +105,7 @@ export function verifyPinPhone(submittedPin, submittedPhone, storedHash) {
   try {
     // Hash the submitted PIN and phone
     const submittedHash = hashPinPhone(submittedPin, submittedPhone);
-    
+
     // Compare with stored hash
     return submittedHash === storedHash;
   } catch (error) {
